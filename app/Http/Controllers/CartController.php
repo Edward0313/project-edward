@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Cart;
+
 class CartController extends Controller
 {
     /**
@@ -13,15 +15,24 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
-        $cart = DB::table('carts')->first();
-        if(empty($cart)){
-            DB::table('carts')->insert(['created_at' => now(), 'updated_at' => now()]);
-            $cart = DB::table('carts')->first();
-        }
-        return response(collect($cart));
+        $user = auth()->user(); //取得登入者資料
+        //firstOrCreate()會先去找符合條件的資料，如果找不到就新增一筆資料
+        $cart = Cart::with('cartItems')->where('user_id', $user->id)-> where('checkouted', false)->firstOrCreate(['user_id' => $user->id]);
+
+        return response($cart);
     }
 
+    public function checkout(){
+        $user = auth()->user();
+        $cart = $user->carts()->where('checkouted', false)->with('cartItems')->first();
+        if($cart){
+            $result = $cart->checkout();
+            return response($result);
+        }else{
+            return response(['message' => '購物車沒有商品'], 400);
+        }
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

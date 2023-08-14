@@ -16,4 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('carts', 'CartController');
+Route::get('getCSRFToken', 'testController@getCSRFToken');
+
+Route::resource('products', 'ProductController');
+
+Route::post('signup', 'AuthController@signup');
+Route::post('login', 'AuthController@login');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('user', 'AuthController@user');
+    Route::get('logout', 'AuthController@logout');
+    Route::post('carts/checkout', 'CartController@checkout');
+    Route::resource('carts', 'CartController');
+    Route::resource('cart-items', 'CartItemController');
+    
+});
