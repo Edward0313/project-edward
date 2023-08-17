@@ -34,3 +34,4 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('cart-items', 'CartItemController');
     
 });
+Route::resource('carts', 'CartController');
