@@ -21,7 +21,7 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function favorites_users()
+    public function favorite_users()
     {
         return $this->belongsToMany(User::class, 'favorites');
     }

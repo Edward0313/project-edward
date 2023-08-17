@@ -10,15 +10,15 @@ use Illuminate\Notifications\Notification;
 class ProductReplenish extends Notification
 {
     use Queueable;
-
+    protected $product;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($product)
     {
-        //
+        $this->product = $product;
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductReplenish extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +55,7 @@ class ProductReplenish extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'your product'.$this->product->title.' replenished'
         ];
     }
 }

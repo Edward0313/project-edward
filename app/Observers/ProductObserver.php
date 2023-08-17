@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Product;
+use App\Notifications\ProductReplenish;
 
 class ProductObserver
 {
@@ -28,7 +29,9 @@ class ProductObserver
         $changes =  $product->getChanges();
         $originals = $product->getOriginal();
         if(isset($changes['quantity']) && $product->quantity > 0 && $originals['quantity'] == 0){
-            dd('123');
+            foreach($product->favorite_users as $user){
+                $user->notify(new ProductReplenish($product));
+            }
         }
     }
 
