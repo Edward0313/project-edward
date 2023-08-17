@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        dump(now());
+        for($i=0; $i < 10000; $i++){
+            DB::table('products')->get();
+        }
+        dump(now());
+        $data = json_decode(Redis::get('products'));
+        return response($data);
+
     }
 
     /**

@@ -13,7 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'WebController@index');
+Route::get('/contact-us', 'WebController@contactUs');
+Route::post('/read-notification', 'WebController@readNotification');
+Route::get('getCSRFToken', 'testController@getCSRFToken');
+Route::resource('products', 'ProductController');
+
+Route::resource('admin/orders', 'Admin\OrderController');
+Route::post('admin/orders/{id}/delivery', 'Admin\OrderController@delivery');
+Route::post('admin/tools/update-product-price', 'Admin\ToolController@updateProductPrice');
+Route::post('admin/tools/create-product-redis', 'Admin\ToolController@createProductRedis');
+
+Route::post('signup', 'AuthController@signup');
+Route::post('login', 'AuthController@login');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('user', 'AuthController@user');
+    Route::get('logout', 'AuthController@logout');
+    Route::post('carts/checkout', 'CartController@checkout');
+    Route::resource('carts', 'CartController');
+    Route::resource('cart-items', 'CartItemController');
+    
 });
-Route::resource('carts', 'CartController');
