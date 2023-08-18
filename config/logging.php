@@ -53,6 +53,10 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        'url_shorten' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/url_shorten.log'),
+        ],
 
         'single' => [
             'driver' => 'single',

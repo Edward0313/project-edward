@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -34,5 +35,20 @@ class Product extends Model
         }
         return true;
     }
-    
-}
+     
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'attachable');
+    }
+
+    //取得商品圖片
+    public function getImageUrlAttribute()
+    {
+        $images = $this->images;
+        if($images->isNotEmpty()){
+            return Storage::url($images->last()->path);
+        }
+            
+        }
+    }
+

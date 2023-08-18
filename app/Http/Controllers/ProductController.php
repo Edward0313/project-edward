@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Services\ShortUrlService;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,13 @@ class ProductController extends Controller
         $data = json_decode(Redis::get('products'));
         return response($data);
 
+    }
+    //縮網址
+    public function shareUrl($id)
+    {
+        $service = new ShortUrlService();
+        $url = $service->makeShortUrl("http://localhost:8000/product/$id");
+        return response(['url' => $url]);
     }
 
     /**

@@ -1,9 +1,15 @@
+@extends('layouts.admin_app')
+@section('content')
 {{-- @php
     use Illuminate\Support\Facades\DB;
 @endphp --}}
 {{ DB::enableQueryLog()  }}
-<h2>後台-訂單列表</h2>
+<h2>訂單列表</h2>
 <span>訂單總數: {{ $orders->count() }}</span>
+<div>
+    <a href="/admin/orders/excel/export">匯出訂單</a>
+    <a href="/admin/orders/excel/export-by-shipped">匯出分類訂單 Excel</a>
+</div>
 <table>
     <thead>
         <tr>
@@ -36,3 +42,4 @@
     @endfor
 </div>
 {{-- {{ dd(DB::getQueryLog()) }} --}}
+@endsection

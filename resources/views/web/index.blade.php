@@ -17,9 +17,24 @@
             <td>{{ $item->title }}</td>
             <td>{{ $item->content }}</td>
             <td>{{ $item->price }}</td>
-            <td></td>
+            <td>
+                <input class="check_shared" type="button" name="分享商品" data-id="{{ $item->id }}">
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+<script>
+    $('.check_shared').on('click', function(){
+        var id = $(this).data('id');
+        $.ajax({
+            method: 'GET',
+            url: '/products/' + id + '/shared-url',
+        })
+        .done(function(msg) {
+             alert('縮網址: ' + msg.url);
+            
+        })
+    });
+</script>
 @endsection
