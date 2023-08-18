@@ -10,4 +10,8 @@ class testController extends Controller
     public function getCSRFToken(){
         return csrf_token();
     }
+
+    public function test(){
+        dd('test');
+    }
 }
