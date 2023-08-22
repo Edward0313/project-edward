@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\OrderMultipleExport;
-use APP\Exports\OrderExport;
+use App\Exports\OrderExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
